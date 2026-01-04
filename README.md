@@ -1,77 +1,77 @@
-UniFi Network Application – Automated Maintenance Script
+# UniFi Network Application – Automated Maintenance Script
 
 A robust Bash maintenance script for Ubuntu-based UniFi Network Application controllers.
 It performs monthly system updates and UniFi upgrades with zero interaction, while protecting your configuration and verifying service health.
 
-✨ Features
+## ✨ Features
 
-Zero-interaction updates
+- Zero-interaction updates
 Pre-seeds debconf to bypass the UniFi backup confirmation prompt.
 
-Configuration protection
+- Configuration protection
 Uses --force-confold to ensure existing UniFi settings are never overwritten.
 
-Version tracking
+- Version tracking
 Logs the exact UniFi version before and after every upgrade.
 
-Service recovery
+- Service recovery
 Automatically restarts the UniFi service if it is not running after an update.
 
-Smart reboots
+- Smart reboots
 Reboots only when required (e.g., kernel updates).
 
-Clean logging
+- Clean logging
 Compatible with logrotate for long-term history without disk bloat.
 
-📋 Prerequisites
+## 📋 Prerequisites
 
-Ubuntu 20.04, 22.04, or 24.04
+- Ubuntu 20.04, 22.04, or 24.04
 
-UniFi Network Application installed from the official Ubiquiti Debian repository
+- UniFi Network Application installed from the official Ubiquiti Debian repository
 
-A user with sudo privileges
+- A user with sudo privileges
 
-🚀 Installation
+## 🚀 Installation
 1. Download the script
-nano maintain.sh
+`nano maintain.sh`
 
 
 Paste the script contents, then save and exit.
 
 2. Make it executable
-chmod +x maintain.sh
+`chmod +x maintain.sh`
 
 3. Schedule automatic execution
 
 Edit root’s crontab:
 
-sudo crontab -e
+`sudo crontab -e`
 
 
 Add the following line at the bottom:
 
-0 3 * * Sun [ "$(/usr/bin/date +%d)" -le 7 ] && /home/YOURUSERNAME/maintain.sh
+`0 3 * * Sun [ "$(/usr/bin/date +%d)" -le 7 ] && /home/YOURUSERNAME/maintain.sh`
 
 
-🔧 Replace YOURUSERNAME with your actual username.
+🔧 Replace **`YOURUSERNAME`** with your **actual** username.
 
 This runs the script once per month, on the first Sunday at 03:00.
 
-🗂 Log Management
+## 🗂 Log Management
 
 All activity is appended to:
 
-~/maintenance.log
+`~/maintenance.log`
 
 
 To keep logs tidy, configure logrotate:
 
-sudo nano /etc/logrotate.d/unifi-maintenance
+`sudo nano /etc/logrotate.d/unifi-maintenance`
 
 
 Paste (and adjust the path if needed):
 
-/home/YOURUSERNAME/maintenance.log {
+`/home/YOURUSERNAME/maintenance.log {
     monthly
     rotate 12
     compress
@@ -79,15 +79,15 @@ Paste (and adjust the path if needed):
     missingok
     notifempty
     copytruncate
-}
+}`
 
-⚙️ How It Works
+## ⚙️ How It Works
 
 Injects has_backup=true into debconf to satisfy the UniFi installer.
 
 Runs:
 
-apt-get update && apt-get full-upgrade
+`apt-get update && apt-get full-upgrade -y`
 
 
 while capturing the UniFi version via dpkg.
@@ -96,10 +96,10 @@ Waits 15 seconds for the database to settle.
 
 Verifies service health using:
 
-systemctl is-active
+`systemctl is-active`
 
 
-If /var/run/reboot-required exists:
+If `/var/run/reboot-required` exists:
 
 Logs the reason
 
@@ -107,7 +107,7 @@ Issues a 30-second warning
 
 Reboots the system
 
-⚠️ Disclaimer
+# ⚠️ Disclaimer
 
 Intended only for native Ubuntu installs
 (❌ not Docker, Podman, or other containerized deployments)
@@ -120,6 +120,6 @@ This script is designed for routine, incremental updates
 
 Test thoroughly on a non-production system before using in production
 
-✅ Result
+## ✅ Result
 
 Enjoy a hands-off, self-maintaining, and always up-to-date UniFi controller 🎉
