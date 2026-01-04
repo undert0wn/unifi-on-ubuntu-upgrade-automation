@@ -2,24 +2,17 @@ UniFi Network Application: Automated Maintenance Script
 A robust Bash script designed for Ubuntu-based UniFi controllers. It automates the monthly system updates and UniFi Network Application upgrades while bypassing interactive prompts and ensuring service health.
 
 🚀 Features
-Zero-Interaction Updates: Pre-seeds debconf to bypass the UniFi backup confirmation prompt.
-
-Config Protection: Uses force-confold to ensure your existing UniFi configurations are never overwritten by package defaults.
-
-Version Tracking: Logs the exact version of UniFi before and after the update process.
-
-Service Recovery: Automatically verifies if the UniFi service is running after an update and attempts a restart if it's down.
-
-Smart Reboots: Only triggers a system reboot if required by the OS (e.g., kernel updates).
-
-Clean Logs: Compatible with logrotate for long-term history without disk bloat.
+     -Zero-Interaction Updates: Pre-seeds debconf to bypass the UniFi backup confirmation prompt.
+     -Config Protection: Uses force-confold to ensure your existing UniFi configurations are never overwritten by package defaults.
+     -Version Tracking: Logs the exact version of UniFi before and after the update process.
+     -Service Recovery: Automatically verifies if the UniFi service is running after an update and attempts a restart if it's down.
+     -Smart Reboots: Only triggers a system reboot if required by the OS (e.g., kernel updates).
+     -Clean Logs: Compatible with logrotate for long-term history without disk bloat.
 
 📋 Prerequisites
-Ubuntu 20.04/22.04/24.04.
-
-UniFi Network Application installed via the official Ubiquiti Debian repository.
-
-A user with sudo privileges.
+     -Ubuntu 20.04/22.04/24.04.
+     -UniFi Network Application installed via the official Ubiquiti Debian repository.
+     -A user with sudo privileges.
 
 🛠️ Installation
 1. Download the script
