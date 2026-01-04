@@ -33,25 +33,27 @@ Compatible with logrotate for long-term history without disk bloat.
 
 ## 🚀 Installation
 1. Download the script
-`nano maintain.sh`
-
+```bash
+nano maintain.sh
+```
 
 Paste the script contents, then save and exit.
 
 2. Make it executable
-`chmod +x maintain.sh`
-
+```bash
+chmod +x maintain.sh
+```
 3. Schedule automatic execution
 
 Edit root’s crontab:
-
-`sudo crontab -e`
-
+```bash
+sudo crontab -e
+```
 
 Add the following line at the bottom:
-
-`0 3 * * Sun [ "$(/usr/bin/date +%d)" -le 7 ] && /home/YOURUSERNAME/maintain.sh`
-
+```bash
+0 3 * * Sun [ "$(/usr/bin/date +%d)" -le 7 ] && /home/YOURUSERNAME/maintain.sh
+```
 
 🔧 Replace **`YOURUSERNAME`** with your **actual** username.
 
@@ -60,18 +62,18 @@ This runs the script once per month, on the first Sunday at 03:00.
 ## 🗂 Log Management
 
 All activity is appended to:
-
-`~/maintenance.log`
-
+```bash
+~/maintenance.log
+```
 
 To keep logs tidy, configure logrotate:
-
-`sudo nano /etc/logrotate.d/unifi-maintenance`
-
+```bash
+sudo nano /etc/logrotate.d/unifi-maintenance
+```
 
 Paste (and adjust the path if needed):
-
-`/home/YOURUSERNAME/maintenance.log {
+```bash
+/home/YOURUSERNAME/maintenance.log {
     monthly
     rotate 12
     compress
@@ -79,25 +81,26 @@ Paste (and adjust the path if needed):
     missingok
     notifempty
     copytruncate
-}`
+}
+```
 
 ## ⚙️ How It Works
 
 Injects has_backup=true into debconf to satisfy the UniFi installer.
 
 Runs:
-
-`apt-get update && apt-get full-upgrade -y`
-
+```bash
+apt-get update && apt-get full-upgrade -y
+```
 
 while capturing the UniFi version via dpkg.
 
 Waits 15 seconds for the database to settle.
 
 Verifies service health using:
-
-`systemctl is-active`
-
+```bash
+systemctl is-active
+```
 
 If `/var/run/reboot-required` exists:
 
